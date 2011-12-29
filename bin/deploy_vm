@@ -1,0 +1,69 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'esx'
+require 'esxmagicwand'
+require 'clamp'
+require 'parseconfig'
+
+class BaseCommand < Clamp::Command
+    parameter "CONFIG_PATH", "Config file path"
+
+    def execute
+        c = ParseConfig.new(config_path)
+
+        begin
+
+            #Prepare MagicWand
+            puts 'Prepare MagicWand'
+            dhcp_host = DHCP::Server.new(c.params['dhcp-server']['ip'], c.params['dhcp-server']['port'])
+            esx_host = ESX::Host.connect(c.params['esx-server']['ip'], c.params['esx-server']['user'], c.params['esx-server']['password'])
+            magic_wand = VMWizard::MagicWand.new(esx_host, dhcp_host)
+
+            #Prepare VM definition
+            puts 'Prepare VM definition'
+            vm = VMWizard::VirtualMachine.new(
+                        :name => c.params['vm']['name'],
+                        :disk_size => c.params['vm']['size'],
+                        :cpu => c.params['vm']['cpu'],
+                        :ram => c.params['vm']['memory'],
+                        :disk_type => c.params['vm']['disk_type'],
+                        :guest => c.params['vm']['os_type']
+            )
+            datastore = c.params['esx-server']['datastore']
+
+            #Deploy VM
+            puts 'Start deployment'
+            deployed_vm = magic_wand.deploy(vm, datastore)
+
+            puts 'Powering ON'
+            deployed_vm.power_on
+
+            mac = ''
+            #Recover mac address
+            Net::SSH.start(c.params['esx-server']['ip'], c.params['esx-server']['user'], :password => c.params['esx-server']['password']) do |ssh|
+                mac = ssh.exec!("grep \"ethernet0.generatedAddress \" \"/vmfs/volumes/#{datastore}/#{vm.name}/#{vm.name}.vmx\"|cut -f3 -d\" \"").gsub('"','')
+            end
+
+            #Prepare lease definition
+            lease = DHCP::Lease.new(
+                            :name => c.params['vm']['lease_name'],
+                            :ip => c.params['vm']['ip'],
+                            :mask => c.params['vm']['mask'],
+                            :mac => mac,
+                            :pxe_path => c.params['vm']['pxe_path'],
+                            :hostname => c.params['vm']['hostname']
+            )
+
+            puts "Adding DHCP lease"
+            dhcp_host.del_lease lease
+            dhcp_host.add_lease lease
+
+        rescue Exception => e
+            puts e.message
+            exit 1
+        end
+    end
+end
+
+BaseCommand.run

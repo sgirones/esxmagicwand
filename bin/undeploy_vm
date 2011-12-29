@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'esx'
+require 'esxmagicwand'
+require 'clamp'
+require 'parseconfig'
+
+class BaseCommand < Clamp::Command
+    parameter "CONFIG_PATH", "Config file path"
+
+    def execute
+        c = ParseConfig.new(config_path)
+
+        begin
+            #Prepare MagicWand
+            puts 'Prepare MagicWand'
+            dhcp_host = DHCP::Server.new(c.params['dhcp-server']['ip'], c.params['dhcp-server']['port'])
+            esx_host = ESX::Host.connect(c.params['esx-server']['ip'], c.params['esx-server']['user'], c.params['esx-server']['password'])
+            magic_wand = VMWizard::MagicWand.new(esx_host, dhcp_host)
+
+            puts 'Start undeploy'
+            magic_wand.undeploy(c.params['vm']['name'])
+
+            #Prepare lease definition
+            lease = DHCP::Lease.new(
+                            :name => c.params['vm']['lease_name'],
+                            :ip => c.params['vm']['ip'],
+                            :mask => c.params['vm']['mask']
+            )
+
+            puts "Removing DHCP lease"
+            dhcp_host.del_lease lease
+
+
+        rescue Exception => e
+            puts e.message
+            exit 1
+        end
+    end
+end
+
+BaseCommand.run

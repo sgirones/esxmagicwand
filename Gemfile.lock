@@ -1,0 +1,48 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    alchemist (0.1.2.1)
+    builder (3.0.0)
+    clamp (0.3.0)
+    esx (0.2.2)
+      alchemist
+      clamp
+      net-scp
+      net-ssh
+      rbvmomi
+      terminal-table
+    git (1.2.5)
+    jeweler (1.6.4)
+      bundler (~> 1.0)
+      git (>= 1.2.5)
+      rake
+    json (1.6.3)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-ssh (2.2.1)
+    nokogiri (1.5.0)
+    parseconfig (0.5.2)
+    rake (0.9.2.2)
+    rbvmomi (1.4.0)
+      builder
+      nokogiri (>= 1.4.1)
+      trollop
+    rcov (0.9.11)
+    rdoc (3.12)
+      json (~> 1.4)
+    shoulda (2.11.3)
+    terminal-table (1.4.4)
+    trollop (1.16.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.0.0)
+  clamp
+  esx (>= 0.2.2)
+  jeweler (~> 1.6.4)
+  parseconfig
+  rcov
+  rdoc
+  shoulda
