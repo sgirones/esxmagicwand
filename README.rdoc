@@ -10,32 +10,32 @@ EsxMagicWand deploy VMs on ESXi hypervisors and starts a PXE installation
 
 * Create a VM conf as following. Replace example values. File centos6_1.conf:
 
-  [dhcp-server]
-  ip=DHCP_SERVER_IP
-  port=7911
-  
-  [esx-server]
-  ip=ESX_SERVER_IP
-  user=root
-  password=ROOT_PASSWORD
-  datastore=datastore1
-  
-  [vm]
-  name=CentOS6
-  size=20000
-  cpu=1
-  memory=3000
-  os_type=centos64Guest
-  
-  lease_name=centos6_test1
-  ip=192.168.20.2
-  mask=255.255.255.0
-  pxe_path=centos6/pxelinux.0
+    [dhcp-server]
+    ip=DHCP_SERVER_IP
+    port=7911
+    
+    [esx-server]
+    ip=ESX_SERVER_IP
+    user=root
+    password=ROOT_PASSWORD
+    datastore=datastore1
+    
+    [vm]
+    name=CentOS6
+    size=20000
+    cpu=1
+    memory=3000
+    os_type=centos64Guest
+    
+    lease_name=centos6_test1
+    ip=192.168.20.2
+    mask=255.255.255.0
+    pxe_path=centos6/pxelinux.0
   
 * Deploy
   
-  deploy_vm centos6_1.conf
+    deploy_vm centos6_1.conf
   
 * Undeploy
 
-  undeploy_vm centos6_1.conf
+    undeploy_vm centos6_1.conf
