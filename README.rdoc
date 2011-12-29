@@ -1,19 +1,41 @@
-= esxmagicwand
+= EsxMagicWand
 
-Description goes here.
+EsxMagicWand deploy VMs on ESXi hypervisors and starts a PXE installation
 
-== Contributing to esxmagicwand
- 
-* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
-* Fork the project
-* Start a feature/bugfix branch
-* Commit and push until you are happy with your contribution
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+== Installation
 
-== Copyright
+  gem install esxmagicwand
 
-Copyright (c) 2011 sgirones. See LICENSE.txt for
-further details.
+== Basic test
 
+* Create a VM conf as following. Replace example values. File centos6_1.conf:
+
+  [dhcp-server]
+  ip=DHCP_SERVER_IP
+  port=7911
+  
+  [esx-server]
+  ip=ESX_SERVER_IP
+  user=root
+  password=ROOT_PASSWORD
+  datastore=datastore1
+  
+  [vm]
+  name=CentOS6
+  size=20000
+  cpu=1
+  memory=3000
+  os_type=centos64Guest
+  
+  lease_name=centos6_test1
+  ip=192.168.20.2
+  mask=255.255.255.0
+  pxe_path=centos6/pxelinux.0
+  
+* Deploy
+  
+  deploy_vm centos6_1.conf
+  
+* Undeploy
+
+  undeploy_vm centos6_1.conf

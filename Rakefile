@@ -24,6 +24,10 @@ Jeweler::Tasks.new do |gem|
   gem.authors = ["sgirones"]
   gem.files = ['lib/*.rb']
   gem.executables = ['deploy_vm', 'undeploy_vm']
+  #Dependencies
+  gem.add_runtime_dependency 'esx'
+  gem.add_runtime_dependency 'parseconfig'
+
 
 end
 Jeweler::RubygemsDotOrgTasks.new
