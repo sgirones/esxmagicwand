@@ -4,7 +4,7 @@ EsxMagicWand deploy VMs on ESXi hypervisors and starts a PXE installation
 
 == Installation
 
-  gem install esxmagicwand
+  $ gem install esxmagicwand
 
 == Basic test
 
@@ -34,8 +34,8 @@ EsxMagicWand deploy VMs on ESXi hypervisors and starts a PXE installation
   
 * Deploy
   
-    deploy_vm centos6_1.conf
+    $ deploy_vm centos6_1.conf
   
 * Undeploy
 
-    undeploy_vm centos6_1.conf
+    $ undeploy_vm centos6_1.conf
