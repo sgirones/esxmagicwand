@@ -6,7 +6,7 @@ EsxMagicWand deploy VMs on ESXi hypervisors and starts a PXE installation
 
   $ gem install esxmagicwand
 
-== Basic test
+== Example
 
 * Create a VM conf as following. Replace example values. File centos6_1.conf:
 
