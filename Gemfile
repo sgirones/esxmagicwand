@@ -11,7 +11,7 @@ group :development do
   gem "jeweler", "~> 1.6.4"
   gem "rcov", ">= 0"
   gem "rdoc", ">= 0"
-  gem "esx", ">= 0.2.2"
+  gem "esx", ">= 0.2.5"
   gem "clamp", ">= 0"
   gem "parseconfig", ">= 0"
 end

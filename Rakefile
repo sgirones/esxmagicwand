@@ -18,8 +18,8 @@ Jeweler::Tasks.new do |gem|
   gem.version = File.exist?('VERSION') ? File.read('VERSION') : "0.1.0"
   gem.homepage = "http://github.com/sgirones/esxmagicwand"
   gem.license = "MIT"
-  gem.summary = "VM deploy on ESX using PXE"
-  gem.description = "VM deploy on ESX using PXE as install method. Add dynamic leases to DHCP server through OMAPI"
+  gem.summary = "VM deployments on ESX using PXE"
+  gem.description = "VM deployments on ESX using PXE as installation method. Add dynamic leases to DHCP server through OMAPI"
   gem.email = "salvador.girones@abiquo.com"
   gem.authors = ["sgirones"]
   gem.files = ['lib/*.rb']

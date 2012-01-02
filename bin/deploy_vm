@@ -22,14 +22,25 @@ class BaseCommand < Clamp::Command
 
             #Prepare VM definition
             puts 'Prepare VM definition'
+            
+            #Get nics
+            nics = []
+            c.params['vm'].keys.each do |key|
+              if key.include? 'network'
+                nics.push({:network => c.params['vm'][key]})
+              end
+            end
+                        
             vm = VMWizard::VirtualMachine.new(
                         :name => c.params['vm']['name'],
                         :disk_size => c.params['vm']['size'],
                         :cpu => c.params['vm']['cpu'],
                         :ram => c.params['vm']['memory'],
                         :disk_type => c.params['vm']['disk_type'],
-                        :guest => c.params['vm']['os_type']
+                        :guest => c.params['vm']['os_type'],
+                        :nics => nics
             )
+                        
             datastore = c.params['esx-server']['datastore']
 
             #Deploy VM
