@@ -26,6 +26,8 @@ EsxMagicWand deploy VMs on ESXi hypervisors and starts a PXE installation
     cpu=1
     memory=3000
     os_type=centos64Guest
+    network1=VM Network
+    network2=Vlan 100
     
     lease_name=centos6_test1
     ip=192.168.20.2
