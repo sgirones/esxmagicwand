@@ -34,7 +34,7 @@ class BaseCommand < Clamp::Command
             vm = VMWizard::VirtualMachine.new(
                         :name => c.params['vm']['name'],
                         :disk_size => c.params['vm']['size'],
-                        :cpu => c.params['vm']['cpu'],
+                        :cpus => c.params['vm']['cpus'],
                         :ram => c.params['vm']['memory'],
                         :disk_type => c.params['vm']['disk_type'],
                         :guest => c.params['vm']['os_type'],

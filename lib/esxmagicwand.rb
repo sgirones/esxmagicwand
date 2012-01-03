@@ -3,12 +3,12 @@ require File.join(File.dirname(__FILE__), 'dhcp.rb')
 module VMWizard
 
     class VirtualMachine
-        attr_reader :name, :disk_size, :cpu, :ram, :disk_type, :guest, :nics
+        attr_reader :name, :disk_size, :cpus, :ram, :disk_type, :guest, :nics
 
-        def initialize(specs)
+    def initialize(specs)
             @name = specs[:name]
             @disk_size = specs[:disk_size]
-            @cpu = specs[:cpu]
+            @cpus = specs[:cpus]
             @ram = specs[:ram]
             @disk_type = specs[:disk_type]
             @guest = specs[:guest]
@@ -31,6 +31,7 @@ module VMWizard
                         :disk_type => :thin,
                         :disk_size => vm.disk_size,
                         :memory => vm.ram,
+                        :cpus => vm.cpus,
                         :guest_id => vm.guest,
                         :nics => vm.nics
                     )
